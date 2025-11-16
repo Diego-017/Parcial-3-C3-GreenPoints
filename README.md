@@ -9,6 +9,7 @@ PROGRAMACIÓN COMPUTACIONAL III.
 Docente: William Alexis Montes Giron.
 
 Integrantes:
+
 Diego Martín López Moreno (SMSS097824)     
 
 Walter Alexander Ramírez Benítez (SMSS082124) 
