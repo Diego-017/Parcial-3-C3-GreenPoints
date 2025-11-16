@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - GreenPoints</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%);
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-session {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .close-session:hover {
+            background: white;
+            color: #2e7d32;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        .welcome, .card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .icon {
+            width: 40px;
+            height: 40px;
+            background: #66bb6a;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .progress-bar { height: 8px; background: #e0e0e0; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: #43a047; transition: width 1s; }
+
+        .tip { display: none; }
+        .tip.active { display: block; }
+
+    </style>
+</head>
+<body>
+
+    <header class="header">
+    <div class="d-flex align-items-center">
+        <h1 style="margin:0;">
+            <a href="{% url 'inicio' %}" style="color: white; text-decoration: none;">
+                🌱 GreenPoints
+            </a>
+        </h1>
+    </div>
+
+        <a href="{% url 'logout' %}" class="close-session">
+            Cerrar sesión
+        </a>
+    </div>
+</header>
+
+
+    <div class="container">
+        <div class="welcome">
+            <h2>Bienvenido a GreenPoints</h2>
+            <p>Has iniciado sesión correctamente. ¡Sigamos cuidando el planeta juntos! 🌍</p>
+        </div>
+        
+            
+        <div class="dashboard-grid">
+            <div class="card">
+                <h3><span class="icon">🌍</span> Impacto Ambiental</h3>
+
+                <div class="metric">
+                    <div class="metric-info">
+                        <div class="metric-value"> árboles salvados</div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:60%;"></div></div>
+                    </div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-info">
+                        <div class="metric-value"> CO₂ reducido</div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:75%;"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3><span class="icon">💡</span> Tips de Reciclaje</h3>
+
+                <div class="tip active">
+                    <strong>♻️ Separa correctamente</strong>
+                    <p>Clasifica residuos en: orgánicos, plásticos, papel y vidrio.</p>
+                </div>
+
+                <div class="tip">
+                    <strong>🧴 Limpia envases</strong>
+                    <p>Enjuaga plásticos y vidrios antes de reciclar.</p>
+                </div>
+
+                <button onclick="nextTip()" class="btn btn-success mt-2">Siguiente Tip →</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    let currentTip = 0;
+    const tips = document.querySelectorAll('.tip');
+
+    function nextTip() {
+        tips[currentTip].classList.remove('active');
+        currentTip = (currentTip + 1) % tips.length;
+        tips[currentTip].classList.add('active');
+    }
+    
+</script>
+
+</body>
+</html>

@@ -1,0 +1,276 @@
+ {% load humanize %} 
+<!--LOAD HUMANIZE ES PARA NO DAÑAR EL ARCHIVO QUE TENEMOS CON ESTADISTICAS A TRAVES DE SETTINS INSTALED APPS-->
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GreenPoints - Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+               background: linear-gradient(135deg,#e8f5e9 0%,#f1f8e9 100%); min-height:100vh; }
+        .header { background: linear-gradient(135deg,#2e7d32 0%,#388e3c 100%); color:white;
+                 padding:18px 28px; display:flex; justify-content:space-between; align-items:center; }
+        .close-session { background: rgba(255,255,255,0.15); border:2px solid white; color:white;
+                         padding:8px 14px; border-radius:8px; text-decoration:none; }
+        .card { border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.06); }
+        .metric-value { font-size:22px; font-weight:700; color:#2e7d32; }
+        .metric-label { color:#666; font-size:13px; }
+        .small-muted { color:#666; font-size:13px; }
+        .impact-item { display:flex; gap:14px; align-items:center; padding:12px 0; border-bottom:1px dashed #eee; }
+        .impact-icon { width:64px; height:64px; border-radius:12px; background:white; display:flex; align-items:center; justify-content:center; font-size:28px; box-shadow:0 4px 10px rgba(0,0,0,0.04); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1 style="margin:0;"><a href="{% url 'inicio' %}" style="color:white; text-decoration:none;">GreenPoints</a></h1>
+
+        <div style="display:flex; gap:12px; align-items:center;">
+            <a href="{% url 'registrar_dispositivo' %}" class="close-session">Registrar dispositivo</a>
+            <a href="{% url 'registrar_reciclaje' %}" class="close-session">Registrar reciclaje</a>
+            <a href="{% url 'logout' %}" class="close-session">Cerrar sesión</a>
+        </div>
+    </header>
+
+    <main class="container my-4">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card p-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h2 style="color:#2e7d32; margin:0">Bienvenido a GreenPoints</h2>
+                            <p class="small-muted mb-0">Panel de datos según registros a nivel Nacional.</p>
+                        </div>
+                        <div class="text-end">
+                            <div class="small-muted">Puntos acumulados (total)</div>
+                            <div class="metric-value">{{ total_puntos }}</div>
+                            <div class="small-muted">Registros totales: {{ total_registros }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GRID: impacto + charts + niveles -->
+        <div class="row g-3">
+           
+            <div class="col-lg-4 col-md-6">
+                <div class="card p-3">
+                    <h5><span style="font-size:20px">🌍</span> Impacto Ambiental en El Salvador</h5>
+
+                    <div class="impact-item">
+                        <div class="impact-icon">🌲</div>
+                        <div>
+                            <div class="metric-value">{{ arboles_salvados }}</div>
+                            <div class="metric-label">Árboles salvados</div>
+                        </div>
+                    </div>
+
+                    <div class="impact-item">
+                        <div class="impact-icon">☁️</div>
+                        <div>
+                            <div class="metric-value">{{ co2_reducido }} kg</div>
+                            <div class="metric-label">CO₂ reducido</div>
+                        </div>
+                    </div>
+
+                    <div class="impact-item">
+                        <div class="impact-icon">💧</div>
+                        <div>
+                            <div class="metric-value">{{ agua_conservada }} L</div>
+                            <div class="metric-label">Agua conservada</div>
+                        </div>
+                    </div>
+
+                    <!-- SEPARADOR -->
+                    <hr>
+
+                    <div class="impact-item">
+                        <div class="impact-icon">🚯</div>
+                        <div>
+                            <div class="metric-value">{{ residuos_desviados_ton }} t</div>
+                            <div class="metric-label">Residuos desviados de vertederos</div>
+                        </div>
+                    </div>
+
+                    <div class="impact-item">
+                        <div class="impact-icon">🏖️</div>
+                        <div>
+                            <div class="metric-value">{{ reduccion_plastico_playas_kg|intcomma }} kg</div>
+                            <div class="metric-label">Plástico retirado de playas</div>
+                        </div>
+                    </div>
+
+                    <div class="impact-item" style="border-bottom: none;">
+                        <div class="impact-icon">🔄</div>
+                        <div>
+                            <div class="metric-value">{{ material_reutilizado_kg|intcomma }} kg</div>
+                            <div class="metric-label">Material recuperado y reutilizado</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Materiales (donut) -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card p-3">
+                    <h5>Materiales registrados</h5>
+                    <canvas id="donutMateriales" style="height:260px;"></canvas>
+                    <div class="mt-2 small-muted">Se actualiza con cada registro de reciclaje.</div>
+                </div>
+            </div>
+
+            <!-- Evolución puntos + niveles -->
+            <div class="col-lg-4 col-md-12">
+                <div class="card p-3 mb-3">
+                    <h5>Evolución de puntos</h5>
+                    <canvas id="linePuntos" style="height:200px;"></canvas>
+                    <div class="small-muted mt-2">Toque un punto de la línea para ver fecha y valor.</div>
+                </div>
+
+                <div class="card p-3">
+                    <h5>Nivel actual</h5>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="level-badge">{{ nivel_actual.nombre }}</div>
+                            <div class="small-muted mt-1">Progreso hacia el siguiente nivel</div>
+                        </div>
+                        <div class="text-end">
+                            <div style="font-size:20px; font-weight:700;">{{ total_puntos }}</div>
+                            <div class="small-muted">puntos totales</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-3">
+                        <div class="progress" style="height:18px;">
+                            <div id="barraProgreso" class="progress-bar" role="progressbar"
+                                 style="width: {{ progreso }}%;" aria-valuenow="{{ progreso }}" aria-valuemin="0" aria-valuemax="100">
+                                {{ progreso }}%
+                            </div>
+                        </div>
+
+                        {% if siguiente_nivel %}
+                            <div class="small-muted mt-2">Siguiente: {{ siguiente_nivel.nombre }} (desde {{ siguiente_nivel.min }} pts)</div>
+                        {% else %}
+                            <div class="small-muted mt-2">Has alcanzado el nivel máximo.</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="card p-3">
+                    <h5>Resumen rápido</h5>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="small-muted">Puntos acumulados</div>
+                            <div class="metric-value">{{ total_puntos }}</div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="small-muted">Registros</div>
+                            <div class="metric-value">{{ total_registros }}</div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="small-muted">Tipos de material</div>
+                            <div class="metric-value" id="tiposCount">--</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Chart.js GRAFICA -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+      
+        const materiales_labels = JSON.parse('{{ materiales_labels|escapejs }}');
+        const materiales_counts = JSON.parse('{{ materiales_counts|escapejs }}');
+        const materiales_kilos = JSON.parse('{{ materiales_kilos|escapejs }}');
+        const chart_dates = JSON.parse('{{ chart_dates|escapejs }}');
+        const chart_points = JSON.parse('{{ chart_points|escapejs }}');
+
+        // donut materiales
+        const ctxD = document.getElementById('donutMateriales').getContext('2d');
+        const donut = new Chart(ctxD, {
+            type: 'doughnut',
+            data: {
+                labels: materiales_labels,
+                datasets: [{
+                    label: 'Registros',
+                    data: materiales_counts,
+                    backgroundColor: [
+                        '#66bb6a','#43a047','#9ccc65','#a5d6a7','#c5e1a5','#dcedc8'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+
+        // linea puntos
+        const ctxL = document.getElementById('linePuntos').getContext('2d');
+        const line = new Chart(ctxL, {
+            type: 'line',
+            data: {
+                labels: chart_dates,
+                datasets: [{
+                    label: 'Puntos por día',
+                    data: chart_points,
+                    fill: true,
+                    tension: 0.3,
+                    borderWidth: 2,
+                    borderColor: '#2e7d32',
+                    backgroundColor: 'rgba(46,125,50,0.12)'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            title: (items) => {
+                                // mostrar solo mes-año si prefieres: comentar la línea de abajo y descomentar la siguiente
+                                return items[0].label;
+                                // return new Date(items[0].label).toLocaleString('es-ES', { month:'short', year:'numeric' });
+                            },
+                            label: (item) => `Puntos: ${item.formattedValue}`
+                        }
+                    }
+                },
+                scales: {
+                    x: { display: true, title: { display: false } },
+                    y: { display: true, title: { display: false }, beginAtZero: true }
+                }
+            }
+        });
+
+        // mostrar conteo de tipos
+        document.getElementById('tiposCount').innerText = materiales_labels.length + ' tipos';
+
+        // simple interactividad: al hacer click en un segmento del donut, filtrar la línea (ejemplo)
+        document.getElementById('donutMateriales').onclick = (evt) => {
+            const activePoints = donut.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+            if (activePoints.length) {
+                const idx = activePoints[0].index;
+                const material = materiales_labels[idx];
+                alert('Has seleccionado: ' + material + '\n(Implementa filtrado avanzado si lo deseas.)');
+            }
+        };
+
+    </script>
+</body>
+</html>
