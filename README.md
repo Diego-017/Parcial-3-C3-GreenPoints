@@ -9,8 +9,8 @@ PROGRAMACIÓN COMPUTACIONAL III.
 Docente: William Alexis Montes Giron.
 
 Integrantes:
-Diego Martín López Moreno (SMSS097824)      Walter Alexander Ramírez Benítez (SMSS082124) 
-Marielena Velásquez Escobar (SMSS018024)    Ariel Esaú Yanes Quintanilla (SMSS008924)
-Juan Ramón Espinal Coto (SMSS102323)        Franklin Aldahir Portillo Flores (SMSS011624) 
+Diego Martín López Moreno (SMSS097824)            Walter Alexander Ramírez Benítez (SMSS082124) 
+Marielena Velásquez Escobar (SMSS018024)          Ariel Esaú Yanes Quintanilla (SMSS008924)
+Juan Ramón Espinal Coto (SMSS102323)              Franklin Aldahir Portillo Flores (SMSS011624) 
 
 Grupo: "A3"
