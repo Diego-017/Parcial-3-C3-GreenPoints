@@ -1,0 +1,35 @@
+{% extends "app/base2.html" %}
+
+{% block content %}
+
+<style>
+    /* Variables del modo oscuro (no cambian tu diseño) */
+    body {
+        background: var(--bg-color) !important;
+        color: var(--text-color) !important;
+    }
+
+    .card {
+        background: var(--card-bg) !important;
+        color: var(--text-color) !important;
+    }
+</style>
+</head>
+<body>
+    
+    <div class="card">
+        <h2>🌱 Nuevo dispositivo registrado</h2>
+
+        <p>Hola, se ha registrado un nuevo dispositivo en GreenPoints:</p>
+
+        <p><strong>Nombre:</strong> {{ dispositivo.nombre }}</p>
+        <p><strong>Ubicación:</strong> {{ dispositivo.ubicacion }}</p>
+        <p><strong>Dirección:</strong> {{ dispositivo.direccion }}</p>
+        <p><strong>Registrado por:</strong> {{ usuario.username }}</p>
+
+        <p>Gracias por contribuir a un planeta más verde. 💚</p>
+    </div>
+{% endblock %}
+
+</body>
+</html>

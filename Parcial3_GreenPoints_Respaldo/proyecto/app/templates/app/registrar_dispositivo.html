@@ -1,0 +1,62 @@
+{% extends "app/base2.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+/* =======================
+   🟢 VARIABLES DE MODO OSCURO
+   ======================= */
+:root {
+    --bg-main: #f8f9fa;
+    --bg-card: #ffffff;
+    --text-normal: #212529;
+}
+
+body.dark-mode {
+    --bg-main: #0f0f0f;
+    --bg-card: #1a1a1a;
+    --text-normal: #e8e8e8;
+}
+
+/* Aplicación */
+body {
+    background: var(--bg-main) !important;
+    color: var(--text-normal) !important;
+}
+
+.card {
+    background: var(--bg-card) !important;
+    color: var(--text-normal) !important;
+}
+
+.form-label {
+    color: var(--text-normal) !important;
+}
+</style>
+
+<div class="container mt-5">
+    <h2 class="text-success mb-4">Registrar Nuevo Dispositivo</h2>
+
+    <form method="POST" class="card p-4">
+        {% csrf_token %}
+        
+        <label class="form-label">Nombre del dispositivo:</label>
+        <input type="text" class="form-control mb-3" name="nombre" required>
+
+        <label class="form-label">Ubicación:</label>
+        <input type="text" class="form-control mb-3" name="ubicacion" required>
+
+        <label class="form-label">Dirección:</label>
+        <input type="text" class="form-control mb-3" name="direccion" required>
+
+        <label class="form-label">Correo electrónico:</label>
+        <input type="email" class="form-control mb-3" name="correo" required>
+
+        <button class="btn btn-success w-100">Registrar</button>
+    </form>
+
+    <a href="{% url 'inicio' %}" class="btn btn-secondary mt-3">← Volver al Dashboard</a>
+</div>
+
+{% endblock %}

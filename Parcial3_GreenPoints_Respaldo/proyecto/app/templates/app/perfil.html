@@ -1,0 +1,83 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Mi Perfil - GreenPoints{% endblock %}
+
+{% block content %}
+
+<style>
+    .perfil-container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: #a4a4a4b5;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(106, 237, 19, 1);
+        font-family: Arial, sans-serif;
+    }
+
+    .perfil-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .perfil-header img {
+        width: 120px;
+        height: 120px;
+        border-radius: 100%;
+        object-fit: cover;
+        border: 3px solid #4CAF50;
+    }
+
+    .perfil-header h2 {
+        margin-top: 10px;
+        color: #333;
+    }
+
+    .perfil-info {
+        margin-top: 20px;
+        font-size: 16px;
+        line-height: 1.7rem;
+    }
+
+    .perfil-info strong {
+        color: #4CAF50;
+    }
+
+    .btn-editar {
+        margin-top: 20px;
+        display: block;
+        width: 100%;
+        background: #4CAF50;
+        padding: 12px;
+        text-align: center;
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .btn-editar:hover {
+        background: #45a049;
+    }
+</style>
+
+<div class="perfil-container">
+
+    <div class="perfil-header">
+        <h2>{{ user.username }}</h2>
+        <p style="color:#777;">Miembro de GreenPoints</p>
+    </div>
+
+    <div class="perfil-info">
+        <p><strong>Nombre completo:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+        <p><strong>Correo electrónico:</strong> {{ user.email }}</p>
+        <p><strong>Puntos acumulados:</strong> {{ puntos_totales }}</p>
+        <p><strong>Fecha de ingreso:</strong> {{ user.date_joined|date:"d/m/Y" }}</p>
+    </div>
+
+    <a href="/perfil/editar/" class="btn-editar">Editar Perfil</a>
+
+</div>
+
+{% endblock %}

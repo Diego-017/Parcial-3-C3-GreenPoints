@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}GreenPoints{% endblock %}</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 🌙 VARIABLES DEL MODO OSCURO -->
+    <style>
+    :root {
+        --bg-main: #f8f9fa;
+        --bg-card: #ffffff;
+        --text-normal: #212529;
+    }
+
+    body.dark-mode {
+        --bg-main: #0f0f0f;
+        --bg-card: #1a1a1a;
+        --text-normal: #e8e8e8;
+    }
+
+    body {
+        background: var(--bg-main) !important;
+        color: var(--text-normal) !important;
+    }
+
+    .card {
+        background: var(--bg-card) !important;
+        color: var(--text-normal) !important;
+    }
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body class="{% if request.session.dark_mode %}dark-mode{% endif %}">
+
+    {% block content %}{% endblock %}
+
+</body>
+</html>

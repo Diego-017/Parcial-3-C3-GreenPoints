@@ -1,0 +1,78 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="text-center mb-3">Canjear Premios</h2>
+
+    <!-- Mensajes -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- PUNTOS DEL USUARIO -->
+    <div class="alert alert-info text-center">
+        <strong>Tus puntos actuales: {{ puntos }}</strong>
+    </div>
+
+    <!-- FORMULARIO PARA INGRESAR CÓDIGO -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <label for="codigo">Ingresa tu código de reciclaje:</label>
+                <input type="text" name="codigo" class="form-control" required>
+                <button class="btn btn-success mt-3 w-100">Validar Código</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- SI NO HAY CÓDIGO -->
+    {% if not catalogo_visible %}
+        <div class="alert alert-warning text-center">
+            Ingresa tu código para ver los premios disponibles.
+        </div>
+    {% endif %}
+
+    <!-- CATÁLOGO -->
+    {% if catalogo_visible %}
+        <h3 class="mb-3">Catálogo de Premios</h3>
+
+        {% if premios %}
+            <div class="row">
+                {% for premio in premios %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        {% if premio.imagen %}
+                            <img src="{{ premio.imagen.url }}" class="card-img-top">
+                        {% else %}
+                            <img src="{% static 'img/noimage.jpg' %}" class="card-img-top">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ premio.nombre }}</h5>
+                            <p class="card-text">{{ premio.descripcion }}</p>
+                            <p><strong>Puntos necesarios: </strong> {{ premio.puntos_necesarios }}</p>
+
+                            <a href="{% url 'confirmar_canje' premio.id %}" class="btn btn-primary w-100">
+                                Canjear
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center">Aún no hay premios disponibles.</p>
+        {% endif %}
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

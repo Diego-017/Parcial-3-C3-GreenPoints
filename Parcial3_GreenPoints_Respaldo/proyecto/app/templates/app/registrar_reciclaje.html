@@ -1,0 +1,81 @@
+{% extends "app/base2.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+/* =======================
+   🟢 VARIABLES DE MODO OSCURO
+   ======================= */
+:root {
+    --bg-main: #f8f9fa;
+    --bg-card: #ffffff;
+    --text-normal: #212529;
+}
+
+body.dark-mode {
+    --bg-main: #0f0f0f;
+    --bg-card: #1a1a1a;
+    --text-normal: #e8e8e8;
+}
+
+/* Aplicación */
+body {
+    background: var(--bg-main) !important;
+    color: var(--text-normal) !important;
+}
+
+.card {
+    background: var(--bg-card) !important;
+    color: var(--text-normal) !important;
+}
+
+.form-label {
+    color: var(--text-normal) !important;
+}
+</style>
+
+<div class="container mt-5">
+    <h2 class="text-success mb-4">Registrar Reciclaje</h2>
+
+    <form method="POST" enctype="multipart/form-data" class="card p-4">
+        {% csrf_token %}
+
+        <label class="form-label">Código recibido por correo:</label>
+        <input type="text" name="codigo_dispositivo" class="form-control mb-3" required>
+
+        <label class="form-label">Nombre:</label>
+        <input type="text" name="nombre" class="form-control mb-3" required>
+
+        <label class="form-label">Apellido:</label>
+        <input type="text" name="apellido" class="form-control mb-3" required>
+
+        <label class="form-label">Correo electrónico:</label>
+        <input type="email" name="correo" class="form-control mb-3" required>
+
+        <label class="form-label">Número telefónico:</label>
+        <input type="tel" name="telefono" class="form-control mb-3" required>
+
+        <label class="form-label">Tipo de Reciclaje:</label>
+        <select name="tipo_material" class="form-control mb-3" required>
+            <option value="">Seleccione...</option>
+            <option value="Plástico">Plástico</option>
+            <option value="Papel y Cartón">Papel y Cartón</option>
+            <option value="Vidrio">Vidrio</option>
+            <option value="Metal">Metal</option>
+            <option value="Electrónicos">Electrónicos</option>
+        </select>
+
+        <label class="form-label">Cantidad (unidades):</label>
+        <input type="number" step="0.01" name="cantidad" class="form-control mb-3" required>
+
+        <label class="form-label">Evidencia fotográfica:</label>
+        <input type="file" name="foto" class="form-control mb-3" accept="image/*" required>
+
+        <button class="btn btn-success w-100">Registrar Reciclaje</button>
+    </form>
+
+    <a href="{% url 'inicio' %}" class="btn btn-secondary mt-3">← Volver al Dashboard</a>
+</div>
+
+{% endblock %}

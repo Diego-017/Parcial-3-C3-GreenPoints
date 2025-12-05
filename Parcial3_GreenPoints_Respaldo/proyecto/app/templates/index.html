@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenPoints | Recicla y Gana</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Estilos CSS personalizados para la estética */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7fbf8; /* Fondo muy claro */
+        }
+        /* Definición de la paleta de colores ajustada */
+        .color-primary { background-color: #16a34a; } /* Verde principal (oscuro) */
+        .color-secondary { background-color: #34d399; } /* Verde para acentos (brillante/aqua) */
+        .text-primary { color: #16a34a; }
+        .text-secondary { color: #34d399; }
+
+        /* Efecto de degradado radial para la sección hero */
+        .hero-bg {
+            background: radial-gradient(at 80% 0%, #dcfce7 0px, transparent 40%), 
+                        radial-gradient(at 0% 100%, #dcfce7 0px, transparent 40%);
+        }
+
+        /* Custom CSS para el efecto Glassmorphism en las tarjetas de materiales */
+        .glass-card {
+            background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco semitransparente */
+            backdrop-filter: blur(10px); /* Desenfoque */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+        }
+        
+        /* Animación de brillo para el botón (personalizado) */
+        @keyframes glow {
+            0% { box-shadow: 0 0 10px #34d399, 0 0 0 #34d399; }
+            50% { box-shadow: 0 0 20px #34d399, 0 0 5px #34d399; }
+            100% { box-shadow: 0 0 10px #34d399, 0 0 0 #34d399; }
+        }
+        .cta-glow-btn:hover {
+            animation: glow 1.5s ease-in-out infinite;
+        }
+
+        /* Estilo para la ola divisoria (un SVG más elegante) */
+        .wave-top {
+            width: 100%;
+            height: 100px;
+            fill: #f7fbf8;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CABECERA FIJA Y SOMBREADA -->
+    <header class="bg-white shadow-xl sticky top-0 z-20 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <h1 class="text-3xl font-black text-primary tracking-widest">GreenPoints</h1>
+        
+            <nav class="space-x-2 sm:space-x-4 flex items-center">
+                <a href="#impacto" class="text-gray-600 hover:text-primary transition font-semibold hidden md:inline">Impacto</a>
+                <a href="#proceso" class="text-gray-600 hover:text-primary transition font-semibold hidden md:inline">Proceso</a>
+                <a href="#aliados" class="text-gray-600 hover:text-primary transition font-semibold hidden md:inline">Aliados</a>
+                <a href="{% url 'login' %}" class="text-primary hover:bg-green-50 px-3 py-2 rounded-lg transition font-medium">
+                Iniciar Sesión
+                </a>
+                <a href="{% url 'register' %}" class="color-primary text-white py-2 px-5 rounded-full font-bold shadow-lg hover:bg-green-700 transition duration-300 transform hover:scale-105">
+                Regístrate
+                </a>
+
+            </nav>
+        </div>
+    </header>
+
+    <!-- SECCIÓN PRINCIPAL -->
+    <main class="pt-20 pb-24 hero-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+           
+                <div class="animate-in slide-in-from-left duration-700">
+                    <span class="inline-block bg-secondary text-gray-900 text-sm font-bold px-4 py-1 rounded-full mb-4 shadow-lg border border-secondary/50">♻️ #FuturoVerde</span>
+                    <h2 class="text-6xl font-black text-gray-900 leading-tight mb-6">
+                        Reciclaje Inteligente, <span class="text-primary border-b-4 border-secondary/70">Recompensas Reales</span>.
+                    </h2>
+                    <p class="text-2xl text-gray-600 mb-10">
+                        GreenPoints conecta tu acción ambiental con beneficios tangibles. Registra tus materiales y empieza a ganar puntos canjeables hoy.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                      <a href="{% url 'register' %}" class="color-primary text-white text-xl font-black py-4 px-10 rounded-full shadow-2xl hover:bg-green-700 transition transform hover:scale-105 cta-glow-btn">
+                    ¡Quiero Mis GreenPoints!
+                    </a>
+                    
+                    </div>
+                </div>
+             
+                <div class="animate-in slide-in-from-right duration-700 hidden md:block">
+               
+                    <div class="bg-white p-6 rounded-[2.5rem] shadow-[0_30px_60px_-15px_rgba(22,163,74,0.6)] transform rotate-2 transition duration-700 hover:rotate-0 hover:scale-[1.02]">
+                        <img src="https://placehold.co/600x400/16a34a/ffffff?text=Tu+Impacto+en+la+App" alt="Captura de Pantalla de GreenPoints" class="rounded-2xl object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Divisor de Onda SVG -->
+    <svg class="wave-top -mb-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+      <path fill="#f7fbf8" fill-opacity="1" d="M0,192L48,197.3C96,203,192,213,288,218.7C384,224,480,224,576,213.3C672,203,768,181,864,170.7C960,160,1056,160,1152,170.7C1248,181,1344,203,1392,213.3L1440,224L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+    </svg>
+    
+    <!-- SECCIÓN: Impacto (Números Grandes) -->
+    <section id="impacto" class="py-16 sm:py-24 bg-white border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h3 class="text-4xl font-extrabold text-center text-gray-800 mb-16">Cifras de impacto colectivo a nivel nacional del año 2025</h3>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+                <!-- Métrica 1: Artículos Salvados -->
+                <div class="p-6 rounded-3xl bg-green-50/70 border border-green-200 text-center shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
+                    <p class="text-7xl font-black text-primary mb-1">180K</p>
+                    <p class="text-xl font-bold text-gray-800">Artículos Salvados</p>
+                    <p class="text-sm text-gray-600 mt-1">Botellas, envoltorios y más</p>
+                </div>
+
+                <!-- Métrica 2: CO2 Reducido -->
+                <div class="p-6 rounded-3xl bg-green-50/70 border border-green-200 text-center shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
+                    <p class="text-7xl font-black text-primary mb-1">5.5 T</p>
+                    <p class="text-xl font-bold text-gray-800">CO₂ Evitado</p>
+                    <p class="text-sm text-gray-600 mt-1">Impacto equivalente a 100 árboles</p>
+                </div>
+
+                <!-- Métrica 3: Agua Conservada -->
+                <div class="p-6 rounded-3xl bg-green-50/70 border border-green-200 text-center shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
+                    <p class="text-7xl font-black text-primary mb-1">1.2M L</p>
+                    <p class="text-xl font-bold text-gray-800">Agua Conservada</p>
+                    <p class="text-sm text-gray-600 mt-1">Vital para el medio ambiente</p>
+                </div>
+
+                <!-- Métrica 4: Residuos Desviados -->
+                <div class="p-6 rounded-3xl bg-green-50/70 border border-green-200 text-center shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
+                    <p class="text-7xl font-black text-primary mb-1">1,200</p>
+                    <p class="text-xl font-bold text-gray-800">Toneladas Desviadas</p>
+                    <p class="text-sm text-gray-600 mt-1">Reduciendo la contaminación de vertederos</p>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+    <!-- SECCIÓN: ¿Cómo Funciona? -->
+    <section id="proceso" class="bg-[#f7fbf8] pt-16 pb-24 sm:pb-32">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h3 class="text-4xl font-extrabold text-center text-gray-800 mb-12">Convierte el Reciclaje en Puntos: Rápido y Fácil</h3>
+            
+            <div class="bg-white p-8 rounded-3xl shadow-2xl border-t-8 border-secondary/80">
+                <!-- Encabezados de Pestañas -->
+                <div class="flex justify-between items-center border-b border-gray-200 mb-8">
+                    <button class="tab-button w-1/3 py-4 text-center font-black text-lg border-b-4 border-transparent text-gray-500 hover:text-primary transition active-tab" data-tab="1">
+                        1.  Registra
+                    </button>
+                    <button class="tab-button w-1/3 py-4 text-center font-black text-lg border-b-4 border-transparent text-gray-500 hover:text-primary transition" data-tab="2">
+                        2.  Gana Puntos
+                    </button>
+                    <button class="tab-button w-1/3 py-4 text-center font-black text-lg border-b-4 border-transparent text-gray-500 hover:text-primary transition" data-tab="3">
+                        3.  Canjea
+                    </button>
+                </div>
+
+                <!-- Contenido de Pestañas -->
+                <div class="tab-content" id="content-1">
+                    <div class="grid md:grid-cols-2 gap-10 items-center">
+                        <div>
+                            <h4 class="text-3xl font-extrabold text-primary mb-4">Paso Uno: Registra y Categoriza</h4>
+                            <p class="text-lg text-gray-700 mb-4">Usa nuestra app inteligente para registrar tus materiales. Se calculan tus residuos y prepara tu entrega para el canjeo de puntos.</p>
+                            <ul class="list-disc list-inside text-gray-600 space-y-2 ml-4">
+                                <li>Tecnología de reconocimiento instantáneo.</li>
+                                <li>Registro de tipo de material.</li>
+                            </ul>
+                        </div>
+                        <div class="hidden md:block">
+                            <img src="https://placehold.co/400x250/d1fae5/16a34a?text=App+Paso+1" alt="Icono de Registro" class="rounded-2xl shadow-xl transform rotate-1">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content hidden" id="content-2">
+                    <div class="grid md:grid-cols-2 gap-10 items-center">
+                        <div>
+                            <h4 class="text-3xl font-extrabold text-primary mb-4">Paso Dos: Acumula GreenPoints</h4>
+                            <p class="text-lg text-gray-700 mb-4">Por cada unidad registrada, recibes GreenPoints. Escala niveles y desbloquea recompensas.</p>
+                            <ul class="list-disc list-inside text-gray-600 space-y-2 ml-4">
+                                <li>Sigue tu ranking en tiempo real.</li>
+                                <li>Niveles de usuario (Sembrador, Recolector, Guardabosques...).</li>
+                            </ul>
+                        </div>
+                        <div class="hidden md:block">
+                            <img src="https://placehold.co/400x250/a7f3d0/16a34a?text=App+Paso+2" alt="Icono de Puntos" class="rounded-2xl shadow-xl transform -rotate-1">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content hidden" id="content-3">
+                    <div class="grid md:grid-cols-2 gap-10 items-center">
+                        <div>
+                            <h4 class="text-3xl font-extrabold text-primary mb-4">Paso Tres: Canjea tus Beneficios</h4>
+                            <p class="text-lg text-gray-700 mb-4">Visita nuestro catálogo. Canjea tus puntos por premios y asi  contribuyes al apoyo de cuido ambiental.</p>
+                            <ul class="list-disc list-inside text-gray-600 space-y-2 ml-4">
+                                <li>Premios destacados.</li>
+                                <li>Preferencias.</li>
+                            </ul>
+                        </div>
+                        <div class="hidden md:block">
+                            <img src="https://placehold.co/400x250/6ee7b7/16a34a?text=App+Paso+3" alt="Icono de Canje" class="rounded-2xl shadow-xl transform rotate-1">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+   
+    <section id="materiales" class="py-16 sm:py-24 bg-primary relative overflow-hidden">
+       
+        <div class="absolute inset-0 z-0 opacity-20">
+            <div class="absolute top-0 left-1/4 w-96 h-96 bg-secondary rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+            <div class="absolute top-1/2 right-1/4 w-80 h-80 bg-green-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h3 class="text-4xl font-extrabold text-black mb-6">Materiales que Suman Puntos</h3>
+            <p class="text-xl text-black-200 mb-12 max-w-3xl mx-auto">Nuestro compromiso es con un amplio rango de residuos. ¡Todo cuenta!</p>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+                
+           
+                
+             
+                <div class="flex flex-col items-center p-6 rounded-3xl glass-card transition duration-300 hover:scale-[1.05] hover:shadow-2xl">
+                    <span class="text-6xl mb-2">🥤</span>
+                    <h4 class="text-lg font-bold text-gray-900 mt-2">Plástico</h4>
+                </div>
+
+                <div class="flex flex-col items-center p-6 rounded-3xl glass-card transition duration-300 hover:scale-[1.05] hover:shadow-2xl">
+                    <span class="text-6xl mb-2">📚</span>
+                    <h4 class="text-lg font-bold text-gray-900 mt-2">Papel y Cartón</h4>
+                </div>
+
+             
+                <div class="flex flex-col items-center p-6 rounded-3xl glass-card transition duration-300 hover:scale-[1.05] hover:shadow-2xl">
+                    <span class="text-6xl mb-2">⚙️</span>
+                    <h4 class="text-lg font-bold text-gray-900 mt-2">Metal / Latas</h4>
+                </div>
+
+            
+                <div class="flex flex-col items-center p-6 rounded-3xl glass-card transition duration-300 hover:scale-[1.05] hover:shadow-2xl">
+                    <span class="text-6xl mb-2">💎</span>
+                    <h4 class="text-lg font-bold text-gray-900 mt-2">Vidrio</h4>
+                </div>
+
+                
+                <div class="flex flex-col items-center p-6 rounded-3xl glass-card transition duration-300 hover:scale-[1.05] hover:shadow-2xl">
+                    <span class="text-6xl mb-2">💻</span>
+                    <h4 class="text-lg font-bold text-gray-900 mt-2">Electrónicos</h4>
+                </div>
+
+               
+                <div class="flex flex-col items-center p-6 rounded-3xl glass-card transition duration-300 hover:scale-[1.05] hover:shadow-2xl">
+                    <span class="text-6xl mb-2">🥛</span>
+                    <h4 class="text-lg font-bold text-gray-900 mt-2">Caja de Premio</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- SECCIÓN: ALIADOS -->
+<section id="aliados" class="py-16 sm:py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        
+        <h3 class="text-4xl font-extrabold text-gray-800 mb-6">
+             Aliados Estratégicos
+        </h3>
+
+        <p class="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
+            GreenPoints cuenta con diversas instituciones que se han unido a nuestra causa para impulsar un impacto ambiental positivo.
+        </p>
+
+        <!-- GRID CENTRADO -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-12 items-center justify-center place-items-center">
+
+            <!-- Aliado 1 -->
+            <div class="opacity-70 hover:opacity-100 transition duration-300 text-center">
+                <img src="https://placehold.co/150x50/ffffff/16a34a?text=Marca+Local+A"
+                     alt="Logo de Marca A"
+                     class="mx-auto filter grayscale hover:grayscale-0">
+                <p class="text-sm text-gray-500 mt-2">🌱</p>
+            </div>
+
+            <!-- Aliado 2 -->
+            <div class="opacity-70 hover:opacity-100 transition duration-300 text-center">
+                <img src="https://placehold.co/150x50/ffffff/16a34a?text=Cafetería+SV"
+                     alt="Logo de Cafetería"
+                     class="mx-auto filter grayscale hover:grayscale-0">
+                <p class="text-sm text-gray-500 mt-2">☕</p>
+            </div>
+
+            <!-- Aliado 3 -->
+            <div class="opacity-70 hover:opacity-100 transition duration-300 text-center">
+                <img src="https://placehold.co/150x50/ffffff/16a34a?text=Tienda+Eco"
+                     alt="Logo de Tienda Eco"
+                     class="mx-auto filter grayscale hover:grayscale-0">
+                <p class="text-sm text-gray-500 mt-2">🛒</p>
+            </div>
+
+            <!-- Aliado 4 -->
+            <div class="opacity-70 hover:opacity-100 transition duration-300 text-center">
+                <img src="https://placehold.co/150x50/ffffff/16a34a?text=ONG+Verde"
+                     alt="Logo de ONG"
+                     class="mx-auto filter grayscale hover:grayscale-0">
+                <p class="text-sm text-gray-500 mt-2">💚</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+
+    <!-- SECCIÓN: Llamada a la Acción Final -->
+    <section class="bg-gray-800 py-20 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h3 class="text-5xl font-extrabold text-white mb-4">El momento de Actuar es Ahora.</h3>
+            <p class="text-xl text-gray-300 mb-10 max-w-3xl mx-auto">Únete a la plataforma que está redefiniendo el futuro ambiental. ¡Tu recompensa te espera!</p>
+           <a href="{% url 'register' %}" class="bg-yellow-400 text-gray-900 text-2xl font-black py-4 px-12 rounded-full shadow-2xl hover:bg-yellow-300 transition transform hover:scale-105 cta-glow-btn">
+            Regístrate Hoy Mismo
+            </a>
+
+        </div>
+    </section>
+
+    <!-- PIE DE PÁGINA REFORZADO -->
+    <footer class="bg-gray-900 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 border-b border-gray-700 pb-8 mb-8">
+                <div>
+                    <h5 class="text-xl font-bold text-secondary mb-4">GreenPoints</h5>
+                    <p class="text-gray-400 text-sm">Convirtiendo el reciclaje en recompensas por un lugar más limpio y verde.</p>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold text-white mb-4">Navegación</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-secondary transition">Inicio</a></li>
+                        <li><a href="#impacto" class="hover:text-secondary transition">Impacto</a></li>
+                        <li><a href="#proceso" class="hover:text-secondary transition">Cómo Funciona</a></li>
+                        <li><a href="#" class="hover:text-secondary transition">Recompensas</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold text-white mb-4">Soporte</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-secondary transition">-</a></li>
+                        <li><a href="#" class="hover:text-secondary transition">-</a></li>
+                        <li><a href="#" class="hover:text-secondary transition">-</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold text-white mb-4">Síguenos</h5>
+                    <div class="flex space-x-4 text-2xl">
+                      
+                        <span class="hover:text-secondary transition cursor-pointer">-</span>
+                        <span class="hover:text-secondary transition cursor-pointer">-</span>
+                        <span class="hover:text-secondary transition cursor-pointer">-</span>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center text-gray-500 text-sm">
+                <p>&copy; 2025 GreenPoints. Un desarrollo sostenible medioambiental.</p>
+            </div>
+        </div>
+    </footer>
+
+   
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            function showTab(tabId) {
+                // Ocultar todos los contenidos
+                tabContents.forEach(content => {
+                    content.classList.add('hidden');
+                });
+
+                // Remover la clase activa de todos los botones
+                tabButtons.forEach(button => {
+                    button.classList.remove('border-primary', 'text-primary', 'active-tab');
+                    button.classList.add('border-transparent', 'text-gray-500');
+                });
+
+                // Mostrar el contenido seleccionado
+                const activeContent = document.getElementById(`content-${tabId}`);
+                if (activeContent) {
+                    activeContent.classList.remove('hidden');
+                }
+
+                // Activar el botón
+                const activeButton = document.querySelector(`.tab-button[data-tab="${tabId}"]`);
+                if (activeButton) {
+                    activeButton.classList.add('border-primary', 'text-primary', 'active-tab');
+                    activeButton.classList.remove('border-transparent', 'text-gray-500');
+                }
+            }
+
+            // Inicializar la primera pestaña
+            showTab('1');
+
+            // Asignar eventos de clic a los botones
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.getAttribute('data-tab');
+                    showTab(tabId);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

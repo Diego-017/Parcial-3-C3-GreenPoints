@@ -1,0 +1,128 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+/* CONTENEDORES GLASS */
+.config-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px);
+    border-radius: 16px;
+    padding: 18px 20px;
+    border: 1px solid rgba(0,0,0,0.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+/* TITULOS */
+.config-title {
+    font-weight: 600;
+    font-size: 18px;
+    color: #2d2d2d;
+    margin-bottom: 10px;
+}
+
+/* SWITCH ULTRA-PREMIUM */
+.switch-v {
+    position: relative;
+    width: 52px;
+    height: 28px;
+    appearance: none;
+    background: #d1d1d1;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.15);
+}
+
+.switch-v:checked {
+    background: linear-gradient(135deg, #00c851, #009432);
+    box-shadow: 0 0 8px rgba(0, 200, 81, 0.6);
+}
+
+.switch-v::before {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: white;
+    border-radius: 100%;
+    top: 2px;
+    left: 2px;
+    transition: 0.3s ease;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+}
+
+.switch-v:checked::before {
+    transform: translateX(24px);
+}
+
+/* LÍNEAS DIVISORAS BONITAS */
+.divider {
+    height: 1px;
+    width: 100%;
+    background: rgba(0,0,0,0.07);
+    margin: 12px 0;
+}
+
+/* LABELS */
+.item-label {
+    font-size: 16px;
+    color: #333;
+}
+</style>
+
+<div class="container mt-4">
+
+    <h3 class="mb-4" style="font-weight:700;">Configuración de la aplicación</h3>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Notificaciones -->
+        <div class="config-card mb-3">
+            <div class="config-title"> Notificaciones</div>
+
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="item-label">Notificaciones de metas</span>
+                <input type="checkbox" class="switch-v" name="noti_metas"
+                       {% if config.noti_metas %}checked{% endif %}>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="item-label">Notificaciones de recompensas</span>
+                <input type="checkbox" class="switch-v" name="noti_recompensas"
+                       {% if config.noti_recompensas %}checked{% endif %}>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="d-flex justify-content-between align-items-center">
+                <span class="item-label">Notificaciones de niveles</span>
+                <input type="checkbox" class="switch-v" name="noti_niveles"
+                       {% if config.noti_niveles %}checked{% endif %}>
+            </div>
+        </div>
+
+        <!-- Apariencia -->
+        <div class="config-card mb-3">
+            <div class="config-title"> Apariencia</div>
+
+            <div class="d-flex justify-content-between align-items-center">
+                <span class="item-label">Modo oscuro</span>
+                <input type="checkbox" class="switch-v" name="modo_oscuro"
+                       {% if config.modo_oscuro %}checked{% endif %}>
+            </div>
+        </div>
+
+        <button class="btn btn-success w-100 mt-3" 
+                style="font-size:17px; border-radius:12px; padding:10px;">
+            Guardar configuración
+        </button>
+    </form>
+
+</div>
+
+{% endblock %}

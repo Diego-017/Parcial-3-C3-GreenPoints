@@ -1,0 +1,93 @@
+{% extends "app/base2.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    /* VARIABLES PARA MODO OSCURO — NO CAMBIO TU DISEÑO */
+    body {
+        background: var(--bg-color) !important;
+        color: var(--text-color) !important;
+    }
+
+    .welcome, .card {
+        background: var(--card-bg) !important;
+        color: var(--text-color) !important;
+    }
+
+    .header, h1, h2, h3, p, strong {
+        color: var(--text-color) !important;
+    }
+
+    /* No toco tus gradientes ni tu estilo original */
+</style>
+
+<div class="header">
+    <div class="d-flex align-items-center">
+        <h1 style="margin:0;">
+            <a href="{% url 'inicio' %}" style="color: white; text-decoration: none;">
+                🌱 GreenPoints
+            </a>
+        </h1>
+    </div>
+
+    <a href="{% url 'logout' %}" class="close-session">
+        Cerrar sesión
+    </a>
+</div>
+
+<div class="container">
+    <div class="welcome">
+        <h2>Bienvenido a GreenPoints</h2>
+        <p>Has iniciado sesión correctamente. ¡Sigamos cuidando el planeta juntos! 🌍</p>
+    </div>
+        
+    <div class="dashboard-grid">
+        <div class="card">
+            <h3><span class="icon">🌍</span> Impacto Ambiental</h3>
+
+            <div class="metric">
+                <div class="metric-info">
+                    <div class="metric-value"> árboles salvados</div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:60%;"></div></div>
+                </div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-info">
+                    <div class="metric-value"> CO₂ reducido</div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:75%;"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><span class="icon">💡</span> Tips de Reciclaje</h3>
+
+            <div class="tip active">
+                <strong>♻️ Separa correctamente</strong>
+                <p>Clasifica residuos en: orgánicos, plásticos, papel y vidrio.</p>
+            </div>
+
+            <div class="tip">
+                <strong>🧴 Limpia envases</strong>
+                <p>Enjuaga plásticos y vidrios antes de reciclar.</p>
+            </div>
+
+            <button onclick="nextTip()" class="btn btn-success mt-2">Siguiente Tip →</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentTip = 0;
+    const tips = document.querySelectorAll('.tip');
+
+    function nextTip() {
+        tips[currentTip].classList.remove('active');
+        currentTip = (currentTip + 1) % tips.length;
+        tips[currentTip].classList.add('active');
+    }
+</script>
+
+{% endblock %}

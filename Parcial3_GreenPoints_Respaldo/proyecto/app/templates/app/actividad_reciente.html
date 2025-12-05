@@ -1,0 +1,123 @@
+{% extends 'app/base2.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    .titulo-seccion {
+        padding: 12px;
+        color: white;
+        font-size: 22px;
+        border-radius: 10px 10px 0 0;
+        margin-bottom: 0;
+    }
+
+    .tabla-container {
+        background: white;
+        padding: 20px;
+        border-radius: 0 0 10px 10px;
+        margin-bottom: 40px;
+        box-shadow: 0px 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .tabla-header {
+        background-color: #d6e7d6 !important;
+        font-weight: bold;
+    }
+
+    .tabla-header-azul {
+        background-color: #dce6ff !important;
+        font-weight: bold;
+    }
+
+    /* Modo oscuro */
+    .dark-mode .tabla-container {
+        background: #1e1e1e !important;
+        color: #fff !important;
+        border: 1px solid #333 !important;
+    }
+    .dark-mode .tabla-header {
+        background-color: #2f4f2f !important;
+        color: #fff !important;
+    }
+    .dark-mode .tabla-header-azul {
+        background-color: #2c3e50 !important;
+        color: #fff !important;
+    }
+</style>
+
+<div class="container mt-4">
+
+    <h1 class="text-center mb-4">Actividad Reciente</h1>
+
+    <!-- Historial de Reciclaje -->
+    <h3 class="titulo-seccion" style="background:#0C8C2F;">Historial de Reciclaje</h3>
+    <div class="tabla-container">
+        <table class="table table-bordered">
+            <thead class="tabla-header">
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Material</th>
+                    <th>Unidades / Kg</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in historial_reciclaje %}
+                <tr>
+                    <td>{{ r.fecha_registro|date:"Y-m-d" }}</td>
+                    <td>{{ r.fecha_registro|time:"H:i" }}</td>
+                    <td>{{ r.tipo_material }}</td>
+                    <td>
+                        {% if r.peso_kg %}
+                            {{ r.peso_kg }} kg
+                        {% elif r.cantidad %}
+                            {{ r.cantidad }} unidades
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">No tienes registros de reciclaje aún.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Historial de Canje -->
+    <h3 class="titulo-seccion" style="background:#006CFF;">Historial de Canje de Premios</h3>
+    <div class="tabla-container">
+        <table class="table table-bordered">
+            <thead class="tabla-header-azul">
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Premio</th>
+                    <th>Puntos Usados</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in historial_canje %}
+                <tr>
+                    <td>{{ c.fecha_canje|date:"Y-m-d" }}</td>
+                    <td>{{ c.fecha_canje|time:"H:i" }}</td>
+                    <td>{{ c.premio.nombre }}</td>
+                    <td>{{ c.puntos_usados }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">No hay canjes realizados aún.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{% url 'inicio' %}" class="btn btn-secondary mt-3">← Volver al Dashboard</a>
+
+</div>
+
+{% endblock %}
